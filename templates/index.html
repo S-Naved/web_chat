@@ -19,11 +19,11 @@ $(document).ready(function() {
 		e.preventDefault()
 		let user_name = $('#name').val()
 		let user_msg = $('#myMessage').val()
-		let img = $('#img').val()
+		//let img = $('#img').val()
 		socket.emit('my envet',{
 			user_name:user_name,
 			message:user_msg,
-			image:img
+			//image:img
 			//data:'new data'
 		});
 		$('#myMessage').val('').focus()
@@ -45,7 +45,7 @@ $(document).ready(function() {
 <form action="" method="post">
 <input type="text" id="name" placeholder="name">
 <input type="text"   id="myMessage" placeholder="message">
-<input type="file" name="" id="img">
+<!-- <input type="file" name="" id="img"> -->
 <button type="submit">Send</button>
 </form>
 </body>

@@ -24,11 +24,11 @@ def handle_message(data , mehtods=['GET','POST']):
     print('Message: ' + str(data) )
     user = data['user_name']
     msgs = data['message']
-    image = data['image']
-    if not image:
-        print('please select image')
-    print(type(image))
-    print(f'username:-{user} \n message:-{msgs} \nimage:{image} \n user_sid:{request.sid}')
+    # image = data['image']
+    # if not image:
+    #     print('please select image')
+    # print(type(image))
+    print(f'username:-{user} \n message:-{msgs}  \n user_sid:{request.sid}')
     emit('my response',data,broadcast = True)
     
 

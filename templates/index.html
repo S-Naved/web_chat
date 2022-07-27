@@ -1,52 +1,59 @@
-<html>
-<head>
-<title>Chat Room</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-</head>
-<body>
-<script type="text/javascript">
-$(document).ready(function() {
+{% extends "base.html" %}
+{% block title%} Chat Room {% endblock title%}
 
-	var socket = io.connect('http://127.0.0.1:5000');
+{% block stylesheets %}
 
-	socket.on('connect', function() {
-		socket.send('User has connected!');
-	});
+{% endblock stylesheets %}
 
-	// sending json data to server at my event 
-	var form = $('form').on('submit', function(e) {
-		e.preventDefault()
-		let user_name = $('#name').val()
-		let user_msg = $('#myMessage').val()
-		//let img = $('#img').val()
-		socket.emit('my envet',{
-			user_name:user_name,
-			message:user_msg,
-			//image:img
-			//data:'new data'
-		});
-		$('#myMessage').val('').focus()
-	});
-	// receving data from server with emit methods 
-	socket.on('my response' , function(msg){
-		console.log(msg)
-		if (typeof msg.user_name !== 'undefined'){
-			$('h3').remove()
-			$('div.message_holder').append('<div><b style="color:#000">'
-				+msg.user_name+'</b>:'+msg.message+'</div>')
-		}
-	})
+{% block content %}
 
-});
-</script>
 <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
 <div class="message_holder"></div>
 <form action="" method="post">
-<input type="text" id="name" placeholder="name">
-<input type="text"   id="myMessage" placeholder="message">
-<!-- <input type="file" name="" id="img"> -->
+<input type="text" id="name"  placeholder="name">
+<input type="text"   id="myMessage"  placeholder="message">
 <button type="submit">Send</button>
 </form>
-</body>
-</html>
+{% endblock content %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	
+		var socket = io.connect('http://127.0.0.1:5000');
+	
+		socket.on('connect', function() {
+			socket.send('User has connected!');
+		});
+	
+		// sending json data to server at my event 
+		var form = $('form').on('submit', function(e) {
+			e.preventDefault()
+			let user_name = $('#name').val()
+			let user_msg = $('#myMessage').val()
+			//let img = $('#img').val()
+			socket.emit('my envet',{
+				user_name:user_name,
+				message:user_msg,
+				//image:img
+				//data:'new data'
+			});
+			$('#myMessage').val('').focus()
+		});
+			
+		// receving data from server with emit methods 
+		socket.on('my response' , function(msg){
+			console.log(msg)
+			if (typeof msg.user_name !== 'undefined'){
+				$('h3').remove()
+				$('div.message_holder').append('<div><b style="color:#000">'
+					+msg.user_name+'</b>:'+msg.message+':'+msg.user_sid +'</div>')
+			}
+		})
+	
+	});
+	</script>
+{% endblock javascripts %}	

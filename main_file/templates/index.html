@@ -6,7 +6,7 @@
 {% endblock stylesheets %}
 
 {% block content %}
-
+<h2>{{name}}</h2>
 <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
 <div class="message_holder"></div>
 <form action="" method="post">
@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-	
+		var username = '{{name}}'
 		var socket = io.connect('http://127.0.0.1:5000');
 	
 		socket.on('connect', function() {
@@ -38,6 +38,7 @@
 			socket.emit('my envet',{
 				user_name:user_name,
 				message:user_msg,
+				name:username
 				//image:img
 				//data:'new data'
 			});

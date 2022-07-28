@@ -1,18 +1,12 @@
 from flask import Flask, render_template,request,session
 from flask_socketio import send,SocketIO,emit
+from main_file import create_app
 
-app = Flask(__name__)
-app.config['SECRET_KEY']='sdasdas'
+app = create_app()
 socket = SocketIO(app,logger=True, engineio_logger=True)
 
 all_users =[]
 
-@app.route('/' , methods = ['GET','POST'])
-def home():
-    name = request.form.get('name')
-    messag = request.form.get('myMessage')
-    print(f'this is all users{all_users}')
-    return render_template('/index.html',name = name,messag=messag)
 
 @socket.on_error_default
 def error_handler(e):
@@ -25,10 +19,6 @@ def handle_message(data , mehtods=['GET','POST']):
     room = [all_users[0]['user_id'],all_users[1]['user_id']]
 
     msgs = data['message']
-    # image = data['image']
-    # if not image:
-    #     print('please select image')
-    # print(type(image))
     data1 = {'user_sid':request.sid}
     new_data = {**data,**data1}
     if request.sid in room:

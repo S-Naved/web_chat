@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+	<title>Login</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="description" content="#">
+	<meta name="keywords" content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+	<meta name="author" content="#">
+{% block stylesheets %}
+<style>
+	.form__button:hover{
+	box-shadow: 0.7rem 0.7rem 0.7rem #c1c1c1, -0.3rem -0.3rem 1rem #ffffff !important;
+	color: #ffffff !important;
+	background: linear-gradient(90deg,#47c0d7 0,#2da5bc 43%,#0f859b 100%) !important;
+	transition: .2s;
+	}
+</style>
+
+<!-- <link rel="icon" href="{{url_for('static',filename='assets/images/favicon.png')}}"  type="image/x-icon"> -->
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+<!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='assets/icon/themify-icons/themify-icons.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='assets/icon/icofont/css/icofont.css')}}"> -->
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+<!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='bower_components/animate.css/animate.css')}}"> -->
+<!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='assets/css/jquery.mCustomScrollbar.css')}}"> -->
+
+{% endblock stylesheets %}
+</head>
+<div class="fix-menu">
+	<div class="theme-loader">
+		<div class="ball-scale">
+			<div class='contain'>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+				<div class="ring">
+					<div class="frame"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<section class="login-block">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<form class="md-float-material form-material" method="POST" action="{{url_for('auth.login')}}">
+					
+					<div class="text-center">
+                        <h1 style="color: #fff;">Login</h1>
+						<!-- <img src="{{url_for('static',filename='login_logo.png')}}" width="300px"  height="250px" alt="spalsh_logo.png"> -->
+					</div>
+						<div class="auth-box card" style="box-shadow: 3px 3px 1px #dadbdd;
+						border-radius: 25px;">
+							<div class="card-block">
+								<div class="row m-b-20">
+									<div class="col-md-12">
+									</div>
+								</div>
+								
+						{% with messages = get_flashed_messages(category_filter=['error']) %}
+						{% if messages %}
+						<ul class=notifications>
+							{% for message in messages %}
+							<div class="container" >       
+								<div   class="alert alert-danger" role="alert" data-type="inverse" data-animation-in="animated fadeIn" data-animation-out="animated fadeOut">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<strong> {{ message }}&emsp;</strong> 
+								</div>
+							</div>
+							{% endfor %}
+						</ul>
+						{% endif %}
+					{% endwith %}
+					{% with messages =get_flashed_messages(category_filter=['success']) %}
+						{% if messages %}
+							<ul class=notifications>
+							{% for message in messages %}
+						<div class="container" >       
+							<div   class="alert alert-success" role="alert" data-type="inverse" data-animation-in="animated fadeIn" data-animation-out="animated fadeOut">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<strong> {{ message }}&emsp;</strong> 
+							</div>
+						</div>
+							{% endfor %}
+							</ul>
+						{% endif %}
+					{% endwith %}
+					
+								<div class="form-group form-primary">
+									<div class="input-group">
+										<div class="input-group-append">
+											<span class="input-group-text"><i class="icofont icofont-ui-message" style="color: #fff;" ></i></span>
+										</div>
+										<input type="email" name="email" class="form-control" required="" placeholder="Your Email Address">
+									</div>
+								</div>
+								<div class="form-group form-primary">
+									<div class="input-group">
+										<div class="input-group-append">
+											<span class="input-group-text" id="eye" onclick="myFunction()">
+												<i class="icofont icofont-lock" style="color: #fff;" ></i>
+											</span> 
+										</div>
+										<input type="password" name="password" id="myInput" class="form-control"  required="" placeholder="Password">
+									</div>
+								</div>
+								<div class="row m-t-30">
+									<div class="col-md-12">
+										<button type="submit"  style="font:bolder;background: rgb(56, 56, 56);color:#fff;font-size:25px;border-color:#000;border-radius :30px;box-shadow: 0.4rem 0.4rem 0.7rem #c1c1c1, -0.3rem -0.3rem 0.6rem #ffffff;" class="form__button btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Login</button>
+									</div>
+								</div>
+                                <div class="row">
+                                    <p class="text-inverse text-left m-b-0"></p>
+                                    <p class="text-inverse text-left" ></p>
+                                <div class="col-md-10">
+                                <p class="text-inverse text-left m-b-0">Don't have an account?</p>
+                                <p class="text-inverse text-left" ><a href="{{url_for('auth.register')}}"><b class="f-w-600" >Register</b></a></p>
+                                </div>
+                                </div>
+							</div>
+
+                            
+						</div>
+					
+				</form>
+
+
+</div>
+</div>
+</div>
+</section>
+{% block javascripts %}
+
+<script>
+	function myFunction() {
+		$('#eye').find("i").toggleClass("icofont-unlocked");
+		var x = document.getElementById("myInput");
+		if (x.type === "password") {
+		  x.type = "text";
+		} else {
+		  x.type = "password";
+		}
+	  }
+</script>
+<script src="{{url_for('static',filename='css/flash_msg.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='css/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='css/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static',filename='css/script.js')}}"></script>
+
+{% endblock javascripts %}
+</body>
+</html>

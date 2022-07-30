@@ -1,11 +1,12 @@
 from flask import Blueprint, redirect, render_template,session,flash,request,url_for
-from flask_login import logout_user,login_user,login_required
+from flask_login import current_user, logout_user,login_user,login_required
 from werkzeug.security import ( generate_password_hash,
                                check_password_hash )
 from datetime import datetime
 from . import db
 from .model import User
 import os
+import uuid
 auth = Blueprint('auth',__name__)
 
 @auth.route('/login' , methods = ['GET' , 'POST'])
@@ -19,6 +20,9 @@ def login():
             if check_password_hash(user.password,password):
                login_user(user)
                session.permanent = True
+               user.user_status = True
+               db.session.commit()
+    
                return redirect(url_for('views.home'))
             else:
                 flash ('Invalid Passowrd',category = 'error')
@@ -52,10 +56,11 @@ def register():
                             password = generate_password_hash
                             (password1,method = 'sha256'),
                             date_created = date_created,
-                            date_create = date_create)
+                            date_create = date_create ,
+                            user_status = True , public_id =str(uuid.uuid4()))
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user,remember = True)
+            login_user(new_user)
             
             return redirect(url_for('views.home'))
     return render_template ('register.html')
@@ -64,6 +69,8 @@ def register():
 @login_required
 def logout():
     logout_user()
+    current_user.user_status = False
+    db.session.commit()
     flash('Logout Successfully !',category = 'success')
     return redirect(url_for('auth.login'))
 
